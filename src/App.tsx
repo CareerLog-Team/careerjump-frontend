@@ -1,25 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Router from "components/Router";
+import Loader from "components/Loader";
+import {useEffect, useState} from "react";
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [init, setInit] = useState<boolean>(true);
+  const userToken = "dsdfsdfs";
+  const verifyUser = (token: string) => {
+    return token === userToken;
+  };
+
+  useEffect(() => {
+    if (verifyUser("")) {
+      setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
+    }
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>{init ? <Router isAuthenticated={isAuthenticated} /> : <Loader />}</>
   );
 }
 
